@@ -56,7 +56,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
             } catch (ReservationException ex) {
                 Logger.getLogger(CarRentalSession.class.getName()).log(Level.SEVERE, null, ex);
                 for(Reservation failedReservation : reservations){
-                    company.cancelReservation(failedReservation);
+                    RentalStore.getRentals().get(failedReservation.getRentalCompany()).cancelReservation(failedReservation);
                 }
                 quotes.clear();
                 throw ex;

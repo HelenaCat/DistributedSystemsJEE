@@ -147,7 +147,9 @@ public class CarRentalCompany {
 	public void cancelReservation(Reservation res) {
 		logger.log(Level.INFO, "<{0}> Cancelling reservation {1}", new Object[]{name, res.toString()});
                 System.out.println("CQRID IN CANCEL " + res.getCarType() + " " + res.getCarId()); //TODO
-		getCar(res.getCarId()).removeReservation(res);
+                System.out.println("TESTING HELENQ ZOOH " + getCar(res.getCarId()).getType().getName()); //TODO
+                Car car = getCar(res.getCarId());
+		car.removeReservation(res);
 	}
         
         public int getNumberOfReservationsForCarType(String carType) {
