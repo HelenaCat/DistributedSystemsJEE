@@ -78,18 +78,11 @@ public class CarRentalCompany {
 	 *********/
 	
 	private Car getCar(int uid) {
-            List<Car> carsWithGoodID = new ArrayList<Car>();//TODO
-		for (Car car : cars) {
-			if (car.getId() == uid)
-				carsWithGoodID.add(car);//return car; TODO
-		}
-                for (Car carWithGoodID : carsWithGoodID){ //TODO
-                    System.out.println("TYPE CAR WITH GOOD ID: " + carWithGoodID.getType().getName());//TODO
-                }//TODO
-                if(!carsWithGoodID.isEmpty()){ //TODO
-                    return carsWithGoodID.get(0); //TODO
-                }//TODO
-		throw new IllegalArgumentException("<" + name + "> No car with uid " + uid);
+            for (Car car : cars) {
+		if (car.getId() == uid)
+                    return car;
+            }
+            throw new IllegalArgumentException("<" + name + "> No car with uid " + uid);
 	}
 	
 	private List<Car> getAvailableCars(String carType, Date start, Date end) {
@@ -137,7 +130,6 @@ public class CarRentalCompany {
 	                + " are unavailable from " + quote.getStartDate() + " to " + quote.getEndDate());
 		Car car = availableCars.get((int)(Math.random()*availableCars.size()));
                 
-                System.out.println("CAR ID JQQQ " + car.getType().getName() + " " + car.getId()); //TODO
 		Reservation res = new Reservation(quote, car.getId());
                 
 		car.addReservation(res);
@@ -146,8 +138,6 @@ public class CarRentalCompany {
 
 	public void cancelReservation(Reservation res) {
 		logger.log(Level.INFO, "<{0}> Cancelling reservation {1}", new Object[]{name, res.toString()});
-                System.out.println("CQRID IN CANCEL " + res.getCarType() + " " + res.getCarId()); //TODO
-                System.out.println("TESTING HELENQ ZOOH " + getCar(res.getCarId()).getType().getName()); //TODO
                 Car car = getCar(res.getCarId());
 		car.removeReservation(res);
 	}
