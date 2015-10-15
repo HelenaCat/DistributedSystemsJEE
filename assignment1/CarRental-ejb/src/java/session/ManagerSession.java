@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import rental.CarRentalCompany;
 import rental.CarType;
 import rental.RentalStore;
+import rental.Reservation;
 
 
 @Stateless
@@ -25,8 +26,14 @@ public class ManagerSession implements ManagerSessionRemote{
     }
 
     @Override
-    public int getNbReservationsClient(String client) {
-        return company.getAllReservationsByClient(client).size();
+    public int getNbReservationsClient(String client) {        
+        int size = 0;
+        
+        for(String companyF : RentalStore.getRentals().keySet()){
+            CarRentalCompany crcompany = RentalStore.getRentals().get(companyF);
+            size += crcompany.getAllReservationsByClient(client).size();
+        }
+        return size;
     }
 
     @Override

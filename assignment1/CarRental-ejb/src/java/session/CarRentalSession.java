@@ -48,14 +48,14 @@ public class CarRentalSession implements CarRentalSessionRemote {
     @Override
     public List<Reservation> confirmQuotes() throws ReservationException{
         List<Reservation> reservations = new ArrayList<Reservation>();
-        for(Quote quote: quotes){
+        for(Quote quote : quotes){
             CarRentalCompany company = RentalStore.getRentals().get(quote.getRentalCompany());
             try {
                 Reservation reservation = company.confirmQuote(quote);
                 reservations.add(reservation);
             } catch (ReservationException ex) {
                 Logger.getLogger(CarRentalSession.class.getName()).log(Level.SEVERE, null, ex);
-                for(Reservation failedReservation: reservations){
+                for(Reservation failedReservation : reservations){
                     company.cancelReservation(failedReservation);
                 }
                 quotes.clear();

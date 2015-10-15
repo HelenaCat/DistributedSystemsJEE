@@ -2,6 +2,8 @@ package client;
 
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import rental.Reservation;
@@ -22,7 +24,14 @@ public class Main extends AbstractTestAgency<CarRentalSessionRemote, ManagerSess
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("found rental companies: "+session.getAllRentalCompanies());
+        Main main = new Main("simpleTrips");
+        try {
+            main.run();
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //System.out.println("found rental companies: "+session.getAllRentalCompanies());
     }
     
     @Override
@@ -36,7 +45,10 @@ public class Main extends AbstractTestAgency<CarRentalSessionRemote, ManagerSess
     @Override
     protected ManagerSessionRemote getNewManagerSession(String name, String carRentalName) throws Exception {
         InitialContext context = new InitialContext();
-        return (ManagerSessionRemote) context.lookup(ManagerSessionRemote.class.getName());
+        ManagerSessionRemote managerSession = (ManagerSessionRemote) context.lookup(ManagerSessionRemote.class.getName());
+        managerSession.setCompany(carRentalName);
+        managerSession.setManager(name);
+        return managerSession;
     }
 
     @Override

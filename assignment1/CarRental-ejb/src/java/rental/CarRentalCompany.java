@@ -1,5 +1,6 @@
 package rental;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -77,15 +78,22 @@ public class CarRentalCompany {
 	 *********/
 	
 	private Car getCar(int uid) {
+            List<Car> carsWithGoodID = new ArrayList<Car>();//TODO
 		for (Car car : cars) {
 			if (car.getId() == uid)
-				return car;
+				carsWithGoodID.add(car);//return car; TODO
 		}
+                for (Car carWithGoodID : carsWithGoodID){ //TODO
+                    System.out.println("TYPE CAR WITH GOOD ID: " + carWithGoodID.getType().getName());//TODO
+                }//TODO
+                if(!carsWithGoodID.isEmpty()){ //TODO
+                    return carsWithGoodID.get(0); //TODO
+                }//TODO
 		throw new IllegalArgumentException("<" + name + "> No car with uid " + uid);
 	}
 	
 	private List<Car> getAvailableCars(String carType, Date start, Date end) {
-		List<Car> availableCars = new LinkedList<Car>();
+		List<Car> availableCars = new ArrayList<Car>();
 		for (Car car : cars) {
 			if (car.getType().getName().equals(carType) && car.isAvailable(start, end)) {
 				availableCars.add(car);
@@ -123,26 +131,30 @@ public class CarRentalCompany {
 	public Reservation confirmQuote(Quote quote) throws ReservationException {
 		logger.log(Level.INFO, "<{0}> Reservation of {1}", new Object[]{name, quote.toString()});
 		List<Car> availableCars = getAvailableCars(quote.getCarType(), quote.getStartDate(), quote.getEndDate());
+
 		if(availableCars.isEmpty())
 			throw new ReservationException("Reservation failed, all cars of type " + quote.getCarType()
 	                + " are unavailable from " + quote.getStartDate() + " to " + quote.getEndDate());
 		Car car = availableCars.get((int)(Math.random()*availableCars.size()));
-		
+                
+                System.out.println("CAR ID JQQQ " + car.getType().getName() + " " + car.getId()); //TODO
 		Reservation res = new Reservation(quote, car.getId());
+                
 		car.addReservation(res);
 		return res;
 	}
 
 	public void cancelReservation(Reservation res) {
 		logger.log(Level.INFO, "<{0}> Cancelling reservation {1}", new Object[]{name, res.toString()});
+                System.out.println("CQRID IN CANCEL " + res.getCarType() + " " + res.getCarId()); //TODO
 		getCar(res.getCarId()).removeReservation(res);
 	}
         
-        public int getNumberOfReservationsForCarType(String carType){
-            List<Reservation> reservations = new LinkedList<Reservation>();
+        public int getNumberOfReservationsForCarType(String carType) {
+            List<Reservation> reservations = new ArrayList<Reservation>();
             for (Car car : cars) {
-                for (Reservation reservation: car.getReservations()){
-                    if(reservation.getCarType().equals(carType)){
+                if(car.getType().getName().equals(carType)){
+                    for (Reservation reservation: car.getReservations()) {
                         reservations.add(reservation);
                     }
                 }

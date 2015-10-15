@@ -1,6 +1,8 @@
 package rental;
 
-public class Reservation extends Quote {
+import java.io.Serializable;
+
+public class Reservation extends Quote implements Serializable {
 
     private int carId;
     
@@ -31,4 +33,8 @@ public class Reservation extends Quote {
         return String.format("Reservation for %s from %s to %s at %s\nCar type: %s\tCar: %s\nTotal price: %.2f", 
                 getCarRenter(), getStartDate(), getEndDate(), getRentalCompany(), getCarType(), getCarId(), getRentalPrice());
     }	
+    
+    public boolean equals(Reservation res){
+        return (this.getCarId() == res.getCarId() && this.getStartDate().equals(res.getStartDate()) && this.getEndDate().equals(res.getEndDate()));
+    }
 }

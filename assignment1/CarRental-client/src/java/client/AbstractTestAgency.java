@@ -169,9 +169,9 @@ public abstract class AbstractTestAgency<ReservationSession, ManagerSession> ext
 			} catch (Exception e) { throw new ApplicationException(e); }
 		} else if (cmd.equals("BMR")){
 			try{
-				ManagerSession aMgmtSession = getNewManagerSession("CarRent", name);
-	            System.out.println("Number of reservations by " + name + ":\t" + getNumberOfReservationsBy(aMgmtSession, name));
-	            System.out.println();
+				ManagerSession aMgmtSession = getNewManagerSession(name, "CarRent");
+                                System.out.println("Number of reservations by " + name + ":\t" + getNumberOfReservationsBy(aMgmtSession, name));
+                                System.out.println();
 			} catch (Exception e) { throw new ApplicationException(e); }
 		} else if (cmd.equals("BS")) {
             try {
