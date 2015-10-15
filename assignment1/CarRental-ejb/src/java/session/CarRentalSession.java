@@ -46,7 +46,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
     }
     
     @Override
-    public void confirmQuotes() throws ReservationException{
+    public List<Reservation> confirmQuotes() throws ReservationException{
         List<Reservation> reservations = new ArrayList<Reservation>();
         for(Quote quote: quotes){
             CarRentalCompany company = RentalStore.getRentals().get(quote.getRentalCompany());
@@ -63,6 +63,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
             }
         }
         quotes.clear();
+        return reservations;
     }
 
     @Override

@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import rental.Reservation;
 import rental.ReservationConstraints;
+import rental.ReservationException;
 import session.CarRentalSessionRemote;
 import session.ManagerSessionRemote;
 
@@ -51,16 +52,16 @@ public class Main extends AbstractTestAgency<CarRentalSessionRemote, ManagerSess
 
     @Override
     protected List<Reservation> confirmQuotes(CarRentalSessionRemote session, String name) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return session.confirmQuotes(); 
     }
 
     @Override
     protected int getNumberOfReservationsBy(ManagerSessionRemote ms, String clientName) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return ms.getNbReservationsClient(clientName);
     }
 
     @Override
     protected int getNumberOfReservationsForCarType(ManagerSessionRemote ms, String carRentalName, String carType) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return ms.getNbReservationsCarType(carRentalName, carType);
     }
 }
